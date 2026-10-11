@@ -60,7 +60,6 @@ android {
         abortOnError = false
         checkDependencies = true
         textReport = true
-        textOutput("stdout")
     }
 }
 
