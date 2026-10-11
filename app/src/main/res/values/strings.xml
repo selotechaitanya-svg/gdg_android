@@ -1,0 +1,143 @@
+<resources>
+    <string name="app_name">Tidemark</string>
+
+    <!-- Navigation -->
+    <string name="nav_today">Today</string>
+    <string name="nav_habits">Habits</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Today Screen -->
+    <string name="today_title">Today</string>
+    <string name="today_progress_summary">%1$d of %2$d done</string>
+    <string name="today_banner_editing">Editing %1$s</string>
+    <string name="today_back_to_today">Back to today</string>
+    <string name="today_empty_title">No habits scheduled for today</string>
+    <string name="today_empty_subtitle">Create a habit or pick one from the quick-start ideas below.</string>
+    <string name="today_undo_done">Habit marked not done</string>
+    <string name="today_undo_action">Undo</string>
+    <string name="today_quick_add">+%1$d</string>
+    <string name="today_log_dialog_title">Log progress for %1$s</string>
+    <string name="today_set_to_target">Set to target</string>
+    <string name="today_clear_log">Clear</string>
+    <string name="today_save">Save</string>
+    <string name="today_cancel">Cancel</string>
+    <string name="today_week_goal_met">Week goal met</string>
+    <string name="today_week_progress_caption">%1$d of %2$d this week</string>
+    <string name="today_stopwatch_start">Start</string>
+    <string name="today_stopwatch_stop">Stop</string>
+    <string name="today_timer_reached">Target time reached!</string>
+
+    <!-- Habits Screen -->
+    <string name="habits_title">Habits</string>
+    <string name="habits_new">+ New Habit</string>
+    <string name="habits_empty">No habits yet. Tap + New Habit to get started.</string>
+    <string name="habits_delete_title">Delete Habit?</string>
+    <string name="habits_delete_message">Deleting \"%1$s\" will permanently remove the habit and all its logged history.</string>
+    <string name="habits_delete_confirm">Delete</string>
+
+    <!-- Editor Screen -->
+    <string name="editor_create_title">Create Habit</string>
+    <string name="editor_edit_title">Edit Habit</string>
+    <string name="editor_name_label">Name</string>
+    <string name="editor_name_hint">e.g. Read, Drink water, Gym</string>
+    <string name="editor_type_label">Type</string>
+    <string name="editor_type_yes_no">Yes / No</string>
+    <string name="editor_type_countable">Countable</string>
+    <string name="editor_type_timed">Timed</string>
+    <string name="editor_target_label">Daily Target</string>
+    <string name="editor_unit_label">Unit</string>
+    <string name="editor_unit_hint">e.g. pages, glasses, reps</string>
+    <string name="editor_step_label">Quick-add Step</string>
+    <string name="editor_schedule_label">Schedule</string>
+    <string name="editor_schedule_daily">Daily</string>
+    <string name="editor_schedule_weekdays">Specific Weekdays</string>
+    <string name="editor_schedule_times_per_week">Times per Week</string>
+    <string name="editor_times_per_week_label">%1$d times per week</string>
+    <string name="editor_reminder_switch">Daily Reminder</string>
+    <string name="editor_reminder_time_label">Reminder Time</string>
+    <string name="editor_start_date_label">Start Date</string>
+    <string name="editor_advanced_section">Advanced</string>
+    <string name="editor_save">Save Habit</string>
+
+    <!-- Type change confirmation -->
+    <string name="type_change_dialog_title">Change Habit Type?</string>
+    <string name="type_change_dialog_message">Changing the type will convert your historical logs: completed days will be preserved with the new target value.</string>
+    <string name="type_change_dialog_confirm">Proceed</string>
+
+    <!-- Habit Detail Screen -->
+    <string name="detail_current_streak">Current Streak</string>
+    <string name="detail_longest_streak">Longest Streak</string>
+    <string name="detail_completion_rates">Completion Rates</string>
+    <string name="detail_rate_7d">7 Days</string>
+    <string name="detail_rate_30d">30 Days</string>
+    <string name="detail_rate_all_time">All Time</string>
+    <string name="detail_rate_4w">4 Weeks</string>
+    <string name="detail_rate_12w">12 Weeks</string>
+    <string name="detail_total_completions">Total Completions</string>
+    <string name="detail_calendar_title">History Calendar</string>
+    <string name="detail_chart_title">Weekly Progress (Last 12 Weeks)</string>
+    <string name="detail_action_edit">Edit</string>
+    <string name="detail_action_delete">Delete</string>
+
+    <!-- Stats Screen -->
+    <string name="stats_title">Overview Statistics</string>
+    <string name="stats_tile_today">Done Today</string>
+    <string name="stats_tile_7d">7-Day Rate</string>
+    <string name="stats_tile_30d">30-Day Rate</string>
+    <string name="stats_tile_best_streak">Best Current Streak</string>
+    <string name="stats_chart_7d_title">Last 7 Days Activity</string>
+    <string name="stats_habits_ranking_title">Habits by Current Streak</string>
+    <string name="stats_empty_message">No statistics available yet. Complete habits to see your insights.</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_theme_title">Appearance</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+
+    <string name="settings_reminder_health_title">Reminder Health</string>
+    <string name="settings_reminder_notif_perm">Notifications: %1$s</string>
+    <string name="settings_reminder_alarm_perm">Exact Alarms: %1$s</string>
+    <string name="settings_reminder_status_granted">Granted</string>
+    <string name="settings_reminder_status_denied">Not Granted</string>
+    <string name="settings_reminder_fix_notif">Grant Notification Permission</string>
+    <string name="settings_reminder_fix_alarm">Grant Exact Alarm Permission</string>
+    <string name="settings_test_reminder_btn">Send Test Reminder (10 s)</string>
+    <string name="settings_test_reminder_scheduled">Test reminder scheduled for 10 seconds from now.</string>
+
+    <string name="settings_data_title">Data &amp; Backup</string>
+    <string name="settings_export_btn">Export Data (JSON)</string>
+    <string name="settings_import_btn">Import Data (JSON)</string>
+    <string name="settings_import_confirm_title">Replace All Current Data?</string>
+    <string name="settings_import_confirm_message">Importing a backup will replace all current habits and logs. This cannot be undone.</string>
+    <string name="settings_import_success">Import successful: restored %1$d habits and %2$d logs.</string>
+    <string name="settings_import_failure">Import failed: %1$s</string>
+
+    <string name="settings_about_title">About Tidemark</string>
+    <string name="settings_about_version">Version 1.0.0 (offline-first)</string>
+    <string name="settings_about_desc">100% offline habit tracker. No accounts, no network access, zero cloud.</string>
+    <string name="settings_about_week_start">ISO weeks start on Monday.</string>
+    <string name="settings_about_author">Built by Chaitanya Selote for GDG on Campus RBU.</string>
+
+    <string name="settings_debug_title">Development Tools</string>
+    <string name="settings_load_demo_data">Load Demo Data (4 habits, ~45 days logs)</string>
+    <string name="settings_clear_all_data">Clear All Data</string>
+    <string name="settings_demo_data_loaded">Demo data successfully loaded.</string>
+    <string name="settings_all_data_cleared">All data cleared.</string>
+
+    <!-- Notifications -->
+    <string name="notif_channel_name">Habit Reminders</string>
+    <string name="notif_channel_desc">Timely reminders to complete your scheduled habits.</string>
+    <string name="notif_action_mark_done">Mark done</string>
+    <string name="notif_progress_text">%1$d / %2$d %3$s today</string>
+    <string name="notif_time_remaining">%1$d / %2$d min today</string>
+    <string name="notif_reminder_default">Time to check off \"%1$s\" today!</string>
+
+    <!-- Calendar Legend -->
+    <string name="legend_complete">Complete</string>
+    <string name="legend_partial">Partial</string>
+    <string name="legend_missed">Missed</string>
+    <string name="legend_unscheduled">Unscheduled</string>
+</resources>
