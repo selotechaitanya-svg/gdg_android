@@ -27,7 +27,16 @@ jobs:
         run: ./gradlew :domain:test --console=plain --stacktrace
 
       - name: Run App Unit Tests
-        run: ./gradlew :app:testDebugUnitTest --console=plain --stacktrace
+        run: |
+          set +e
+          ./gradlew :app:testDebugUnitTest --console=plain --stacktrace > app_test.log 2>&1
+          EXIT_CODE=$?
+          echo "## App Unit Tests Log (exit code $EXIT_CODE)" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -n 120 app_test.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat app_test.log
+          exit $EXIT_CODE
 
       - name: Upload Test Reports
         if: always()
@@ -37,7 +46,16 @@ jobs:
           path: '**/build/reports/**'
 
       - name: Run Android Lint
-        run: ./gradlew :app:lintDebug --console=plain --stacktrace
+        run: |
+          set +e
+          ./gradlew :app:lintDebug --console=plain --stacktrace > lint.log 2>&1
+          EXIT_CODE=$?
+          echo "## Android Lint Log (exit code $EXIT_CODE)" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -n 120 lint.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat lint.log
+          exit $EXIT_CODE
 
       - name: Assemble Debug APK
         run: ./gradlew :app:assembleDebug --console=plain --stacktrace
