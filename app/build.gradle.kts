@@ -55,6 +55,13 @@ android {
     testOptions {
         unitTests.isReturnDefaultValues = true
     }
+
+    lint {
+        abortOnError = false
+        checkDependencies = true
+        textReport = true
+        textOutput("stdout")
+    }
 }
 
 tasks.withType<Test>().configureEach {

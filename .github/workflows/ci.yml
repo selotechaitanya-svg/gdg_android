@@ -27,17 +27,7 @@ jobs:
         run: ./gradlew :domain:test --console=plain --stacktrace
 
       - name: Run App Unit Tests
-        run: ./gradlew :app:testDebugUnitTest --console=plain --stacktrace 2>&1 | tee app_test.log
-
-      - name: Publish Test Output to Summary
-        if: always()
-        run: |
-          echo "## App Test Log Output" >> $GITHUB_STEP_SUMMARY
-          if [ -f app_test.log ]; then
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            tail -n 250 app_test.log >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-          fi
+        run: ./gradlew :app:testDebugUnitTest --console=plain --stacktrace
 
       - name: Upload Test Reports
         if: always()
@@ -45,13 +35,6 @@ jobs:
         with:
           name: test-reports
           path: '**/build/reports/**'
-
-      - name: Upload App Test Log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-test-log
-          path: app_test.log
 
       - name: Run Android Lint
         run: ./gradlew :app:lintDebug --console=plain --stacktrace
