@@ -1,0 +1,32 @@
+# Agent and local files
+.agent/
+local.properties
+dist/
+
+# Gradle
+.gradle/
+build/
+*/build/
+
+# Android Studio / IntelliJ IDEA
+*.iml
+.idea/
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# Build outputs
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Kotlin
+.kotlin/
