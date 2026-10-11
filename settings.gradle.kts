@@ -21,3 +21,12 @@ dependencyResolutionManagement {
 
 rootProject.name = "tidemark"
 include(":domain")
+
+// Include :app when Android SDK is configured via environment variable or local.properties
+val hasAndroidSdk = System.getenv("ANDROID_HOME") != null ||
+    System.getenv("ANDROID_SDK_ROOT") != null ||
+    file("local.properties").exists()
+
+if (hasAndroidSdk) {
+    include(":app")
+}
