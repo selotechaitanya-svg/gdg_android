@@ -36,6 +36,15 @@ jobs:
           name: test-reports
           path: '**/build/reports/tests/**'
 
+      - name: Print Test Results Summary
+        if: always()
+        run: |
+          for f in $(find . -path "*/test-results/*/*.xml"); do
+            echo "::group::Test Results: $f"
+            cat "$f"
+            echo "::endgroup::"
+          done
+
       - name: Run Android Lint
         run: ./gradlew :app:lintDebug --console=plain --stacktrace
 

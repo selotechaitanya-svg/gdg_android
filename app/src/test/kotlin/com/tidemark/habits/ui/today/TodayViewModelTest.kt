@@ -9,6 +9,7 @@ import com.tidemark.habits.domain.model.HabitType
 import com.tidemark.habits.domain.model.Schedule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -240,7 +241,7 @@ class TodayViewModelTest {
 
         // Start stopwatch on Monday
         viewModel.startStopwatch(1)
-        advanceUntilIdle()
+        runCurrent()
 
         assertNotNull(viewModel.uiState.value.activeTimer)
 

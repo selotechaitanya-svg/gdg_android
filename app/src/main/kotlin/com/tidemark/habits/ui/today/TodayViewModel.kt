@@ -75,7 +75,6 @@ class TodayViewModel(
 
     init {
         observeData()
-        startStopwatchTicker()
     }
 
     private fun observeData() {
@@ -86,9 +85,10 @@ class TodayViewModel(
                 _selectedDate,
                 settingsRepository.activeTimerFlow
             ) { habits, logs, selectedDate, activeTimer ->
-                buildUiState(habits, logs, selectedDate, activeTimer)
-            }.collect { newState ->
+                Pair(buildUiState(habits, logs, selectedDate, activeTimer), activeTimer)
+            }.collect { (newState, activeTimer) ->
                 _uiState.value = newState
+                updateStopwatchTicker(activeTimer)
             }
         }
     }
@@ -180,19 +180,27 @@ class TodayViewModel(
         )
     }
 
-    private fun startStopwatchTicker() {
-        tickerJob?.cancel()
-        tickerJob = viewModelScope.launch {
-            while (true) {
-                delay(1000)
-                val timer = _uiState.value.activeTimer
-                if (timer != null) {
+    private fun updateStopwatchTicker(activeTimer: ActiveTimer?) {
+        if (activeTimer == null) {
+            tickerJob?.cancel()
+            tickerJob = null
+        } else if (tickerJob?.isActive != true) {
+            tickerJob = viewModelScope.launch {
+                while (isActive) {
+                    delay(1000)
+                    val timer = _uiState.value.activeTimer ?: break
                     val nowMs = timeProvider.now().toEpochMilli()
                     val seconds = ((nowMs - timer.startEpochMs) / 1000L).coerceAtLeast(0L)
                     _uiState.update { it.copy(elapsedTimerSeconds = seconds) }
                 }
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        tickerJob?.cancel()
+        tickerJob = null
     }
 
     fun selectDate(date: LocalDate) {
