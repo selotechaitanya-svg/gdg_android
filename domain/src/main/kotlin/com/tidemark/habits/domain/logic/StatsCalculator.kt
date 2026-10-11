@@ -153,7 +153,8 @@ object StatsCalculator {
 
     /**
      * Computes completion rate for TimesPerWeek habits.
-     * Excludes an unmet in-progress current week from evaluated weeks.
+     * Evaluated weeks = finished weeks + current week only if already MET.
+     * An in-progress unmet current week is excluded.
      */
     fun calculateWeekRate(
         habit: Habit,
@@ -167,12 +168,6 @@ object StatsCalculator {
         val allWeeks = WeekUtils.weeksBetween(habit.startDate, today)
         if (allWeeks.isEmpty()) return null
 
-        val weeks = if (windowWeeks != null && allWeeks.size > windowWeeks) {
-            allWeeks.takeLast(windowWeeks)
-        } else {
-            allWeeks
-        }
-
         val completedDates = logs.filter { it.completed && !it.date.isBefore(habit.startDate) && !it.date.isAfter(today) }
             .map { it.date }
             .toSet()
@@ -180,10 +175,9 @@ object StatsCalculator {
         val currentWeekMonday = WeekUtils.startOfWeek(today)
         val firstWeekMonday = WeekUtils.startOfWeek(habit.startDate)
 
-        var evaluatedWeeks = 0
-        var metWeeks = 0
+        val evaluatedWeeks = mutableListOf<Boolean>() // true for MET, false for UNMET
 
-        for (monday in weeks) {
+        for (monday in allWeeks) {
             val sunday = WeekUtils.endOfWeek(monday)
             val doneInWeek = completedDates.count { date ->
                 !date.isBefore(monday) && !date.isAfter(sunday)
@@ -197,17 +191,24 @@ object StatsCalculator {
 
             val isMet = doneInWeek >= required
             if (isMet) {
-                evaluatedWeeks++
-                metWeeks++
+                evaluatedWeeks.add(true)
             } else if (monday == currentWeekMonday) {
                 // In-progress unmet current week is excluded
             } else {
-                evaluatedWeeks++
+                evaluatedWeeks.add(false)
             }
         }
 
-        if (evaluatedWeeks == 0) return null
-        return (metWeeks.toDouble() / evaluatedWeeks.toDouble()) * 100.0
+        if (evaluatedWeeks.isEmpty()) return null
+
+        val windowEvaluated = if (windowWeeks != null && evaluatedWeeks.size > windowWeeks) {
+            evaluatedWeeks.takeLast(windowWeeks)
+        } else {
+            evaluatedWeeks
+        }
+
+        val metCount = windowEvaluated.count { it }
+        return (metCount.toDouble() / windowEvaluated.size.toDouble()) * 100.0
     }
 
     /**
