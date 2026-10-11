@@ -18,6 +18,9 @@ interface HabitLogDao {
     @Query("SELECT * FROM habit_logs WHERE date BETWEEN :from AND :to ORDER BY date ASC")
     fun observeBetween(from: String, to: String): Flow<List<HabitLogEntity>>
 
+    @Query("SELECT * FROM habit_logs ORDER BY date ASC")
+    fun observeAll(): Flow<List<HabitLogEntity>>
+
     @Query("SELECT * FROM habit_logs WHERE habitId = :habitId AND date = :date")
     suspend fun getByHabitAndDate(habitId: Long, date: String): HabitLogEntity?
 

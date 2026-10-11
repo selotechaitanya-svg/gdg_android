@@ -56,6 +56,12 @@ class RoomHabitRepository(
         }
     }
 
+    override fun observeAllLogs(): Flow<List<HabitLog>> {
+        return logDao.observeAll().map { entities ->
+            entities.map { LogMapper.toDomain(it) }
+        }
+    }
+
     override suspend fun getHabit(id: Long): Habit? {
         return habitDao.getById(id)?.let { HabitMapper.toDomain(it) }
     }

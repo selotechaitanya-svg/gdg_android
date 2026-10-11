@@ -21,12 +21,13 @@ object HabitMapper {
         val type = HabitType.valueOf(entity.type)
         val schedule = when (entity.scheduleType) {
             "DAILY" -> Schedule.Daily
-            "WEEKDAYS" -> Schedule.Weekdays(maskToDays(entity.weekdaysMask))
-            "TIMES_PER_WEEK" -> Schedule.TimesPerWeek(entity.timesPerWeek)
+            "WEEKDAYS" -> Schedule.Weekdays(maskToDays(entity.weekdaysMask).ifEmpty { setOf(DayOfWeek.MONDAY) })
+            "TIMES_PER_WEEK" -> Schedule.TimesPerWeek(if (entity.timesPerWeek in 1..7) entity.timesPerWeek else 1)
             else -> Schedule.Daily
         }
         val reminderTime = entity.reminderMinutes?.let { minutes ->
-            LocalTime.of(minutes / 60, minutes % 60)
+            val clamped = minutes.coerceIn(0, 1439)
+            LocalTime.of(clamped / 60, clamped % 60)
         }
         val startDate = LocalDate.parse(entity.startDate)
         val createdAt = Instant.ofEpochMilli(entity.createdAtEpochMs)

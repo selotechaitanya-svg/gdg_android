@@ -52,7 +52,7 @@ class HabitsViewModel(
             // Observe habits and logs for streak & 30-day stats
             combine(
                 repository.observeHabits(),
-                repository.observeLogsBetween(today.minusDays(60), today)
+                repository.observeAllLogs()
             ) { habits, logs ->
                 val logsByHabit = logs.groupBy { it.habitId }
                 habits.map { habit ->

@@ -80,12 +80,9 @@ class TodayViewModel(
 
     private fun observeData() {
         viewModelScope.launch {
-            val today = timeProvider.today()
-            val stripStart = today.minusDays(13)
-
             combine(
                 repository.observeHabits(),
-                repository.observeLogsBetween(stripStart, today),
+                repository.observeAllLogs(),
                 _selectedDate,
                 settingsRepository.activeTimerFlow
             ) { habits, logs, selectedDate, activeTimer ->

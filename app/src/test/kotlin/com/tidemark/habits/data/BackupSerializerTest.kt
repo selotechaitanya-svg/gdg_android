@@ -179,4 +179,80 @@ class BackupSerializerTest {
         assertTrue(result.isFailure)
         assertTrue(result.exceptionOrNull()?.message?.contains("cannot be negative") == true)
     }
+
+    @Test
+    fun `backup serializer rejects duplicate habit ids`() {
+        val json = """
+            {
+              "app": "tidemark",
+              "schemaVersion": 1,
+              "exportedAt": "2026-10-05T00:00:00Z",
+              "habits": [
+                {
+                  "id": 1,
+                  "name": "Read",
+                  "type": "COUNTABLE",
+                  "scheduleType": "DAILY",
+                  "target": 20,
+                  "startDate": "2026-10-05",
+                  "createdAt": "2026-10-05T00:00:00Z"
+                },
+                {
+                  "id": 1,
+                  "name": "Meditate",
+                  "type": "YES_NO",
+                  "scheduleType": "DAILY",
+                  "target": 1,
+                  "startDate": "2026-10-05",
+                  "createdAt": "2026-10-05T00:00:00Z"
+                }
+              ],
+              "logs": []
+            }
+        """.trimIndent()
+
+        val result = BackupSerializer.validateAndParse(json)
+        assertTrue(result.isFailure)
+        assertTrue(result.exceptionOrNull()?.message?.contains("Duplicate habit ID") == true)
+    }
+
+    @Test
+    fun `backup serializer rejects duplicate logs for same habit and date`() {
+        val json = """
+            {
+              "app": "tidemark",
+              "schemaVersion": 1,
+              "exportedAt": "2026-10-05T00:00:00Z",
+              "habits": [
+                {
+                  "id": 1,
+                  "name": "Read",
+                  "type": "COUNTABLE",
+                  "scheduleType": "DAILY",
+                  "target": 20,
+                  "startDate": "2026-10-05",
+                  "createdAt": "2026-10-05T00:00:00Z"
+                }
+              ],
+              "logs": [
+                {
+                  "habitId": 1,
+                  "date": "2026-10-05",
+                  "value": 10,
+                  "completed": false
+                },
+                {
+                  "habitId": 1,
+                  "date": "2026-10-05",
+                  "value": 20,
+                  "completed": true
+                }
+              ]
+            }
+        """.trimIndent()
+
+        val result = BackupSerializer.validateAndParse(json)
+        assertTrue(result.isFailure)
+        assertTrue(result.exceptionOrNull()?.message?.contains("Duplicate log entry") == true)
+    }
 }

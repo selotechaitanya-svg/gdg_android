@@ -24,6 +24,9 @@ interface HabitRepository {
     /** Observe logs across all habits between [from] and [to] inclusive. */
     fun observeLogsBetween(from: LocalDate, to: LocalDate): Flow<List<HabitLog>>
 
+    /** Observe all logged days across all habits. */
+    fun observeAllLogs(): Flow<List<HabitLog>>
+
     /** Fetch a single habit snapshot by [id]. */
     suspend fun getHabit(id: Long): Habit?
 

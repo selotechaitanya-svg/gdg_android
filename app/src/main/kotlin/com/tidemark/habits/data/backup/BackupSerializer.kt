@@ -157,7 +157,9 @@ object BackupSerializer {
                     throw IllegalArgumentException("Invalid createdAt '${h.createdAt}' for habit '${h.name}'")
                 }
 
-                habitIds.add(h.id)
+                if (!habitIds.add(h.id)) {
+                    throw IllegalArgumentException("Duplicate habit ID ${h.id} in backup")
+                }
                 Habit(
                     id = h.id,
                     name = h.name,
@@ -172,6 +174,7 @@ object BackupSerializer {
                 )
             }
 
+            val logKeys = mutableSetOf<Pair<Long, LocalDate>>()
             val domainLogs = envelope.logs.map { l ->
                 // Referential integrity check
                 if (!habitIds.contains(l.habitId)) {
@@ -182,6 +185,10 @@ object BackupSerializer {
                     LocalDate.parse(l.date)
                 } catch (e: DateTimeParseException) {
                     throw IllegalArgumentException("Invalid log date '${l.date}' for habit ID ${l.habitId}")
+                }
+
+                if (!logKeys.add(Pair(l.habitId, date))) {
+                    throw IllegalArgumentException("Duplicate log entry for habit ID ${l.habitId} on date $date")
                 }
 
                 if (l.value < 0) {

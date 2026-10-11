@@ -32,6 +32,8 @@ class FakeHabitRepository : HabitRepository {
         }
     }
 
+    override fun observeAllLogs(): Flow<List<HabitLog>> = logsFlow.asStateFlow()
+
     override suspend fun getHabit(id: Long): Habit? {
         return habitsFlow.value.find { it.id == id }
     }

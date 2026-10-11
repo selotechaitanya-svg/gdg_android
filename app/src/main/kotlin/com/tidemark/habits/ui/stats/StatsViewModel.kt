@@ -56,12 +56,10 @@ class StatsViewModel(
     private fun observeStats() {
         viewModelScope.launch {
             val today = timeProvider.today()
-            val start7d = today.minusDays(6)
-            val start60d = today.minusDays(60)
 
             combine(
                 repository.observeHabits(),
-                repository.observeLogsBetween(start60d, today)
+                repository.observeAllLogs()
             ) { habits, logs ->
                 if (habits.isEmpty()) {
                     StatsUiState(hasHabits = false, isLoading = false)
